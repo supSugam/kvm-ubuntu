@@ -4,6 +4,7 @@
 
 - Ubuntu 24.04.1 Server ISO at same level as the main script (Optional, will download using `wget` if not found)
 - `user-data` and `meta-data` files at same level as the main script.
+- `wget` installed IF the ISO is not found.
 
 1. Check if your CPU supports hardware virtualization
 
@@ -130,3 +131,7 @@ Welcome to Ubuntu 24.04.1 LTS (GNU/Linux 6.8.0-48-generic x86_64)
 ```
 
 Says 13.67GB, but the disk image was created with 30GB.
+
+## References
+
+1. [https://sysguides.com/kvm-guest-os-from-the-command-line](https://sysguides.com/kvm-guest-os-from-the-command-line)
