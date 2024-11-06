@@ -50,11 +50,10 @@ if [ ! -f "meta-data" ] || [ ! -f "user-data" ]; then
 fi
 
 
-if [ ! -f "seed.iso" ]; then
-    echo "Creating cloud-init seed ISO..."
-    cloud-localds seed.iso user-data meta-data
+if [ -f "seed.iso" ]; then
+    rm -f seed.iso
 fi
-
+cloud-localds seed.iso user-data meta-data
 
 echo "Creating VM with autoinstall..."
 sudo virt-install \
@@ -62,7 +61,6 @@ sudo virt-install \
     --memory ${VM_MEMORY} \
     --vcpus ${VM_CPU} \
     --os-variant ubuntu22.04 \
-    --os-type linux \
     --disk path=${VM_DISK_PATH},size=30,format=qcow2,bus=virtio \
     --disk path=seed.iso,device=cdrom,format=raw,cache=none \
     --network network=default,model=virtio \

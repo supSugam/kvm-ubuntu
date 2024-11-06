@@ -5,7 +5,7 @@ autoinstall:
     realname: ubuntu
     hostname: ubuntu
     username: ubuntu
-    password: password
+    password: '$6$cJ5vVXhHNwGD5OmC$xR0dC7qtMdnshN7UkywFMOeCHX9ZaIViVEGgHrpB3ZYXo99eiUzPT7pTahVHtu7VlkMqKotYsvc6cSv3iZg561' # ubuntu
   ssh:
     install-server: true
     authorized-keys:
@@ -17,7 +17,7 @@ autoinstall:
     network:
       version: 2
       ethernets:
-        ens3:
+        enp1s0:
           dhcp4: true
   storage:
     layout:
@@ -29,12 +29,11 @@ autoinstall:
     - curl
     - wget
     - git
-    - tmux
-    - htop
-    - net-tools
     - openssh-server
-    - qemu-guest-agent
   user-data:
     disable_root: false
   late-commands:
+    - sudo apt-get update
     - echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/ubuntu
+    - ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | awk '{print "IP Address: "$1}'
+
