@@ -3,44 +3,25 @@
 ## Prerequisites
 
 - Ubuntu 24.04.1 Server ISO at same level as the main script (Optional, will download using `wget` if not found)
-- `user-data` and `meta-data` files at same level as the main script
--
+- `user-data` and `meta-data` files at same level as the main script.
 
-1. Install KVM and QEMU
-
-```bash
-sudo apt -y install bridge-utils cpu-checker libvirt-clients libvirt-daemon qemu qemu-kvm
-```
-
-2. Check if your CPU supports hardware virtualization
+1. Check if your CPU supports hardware virtualization
 
 ```bash
 kvm-ok
 ```
 
-3. Enable and start the libvirtd service
+Only proceed if the output is `INFO: /dev/kvm exists`.
 
-```bash
-sudo systemctl enable libvirtd
-sudo systemctl start libvirtd
-```
+2. Download the cloud image for Ubuntu 24.04.1 Server
 
-4. Make your user a member of the libvirt group so that you can manage virtual machines without root privileges
-
-```bash
-sudo usermod -aG libvirt $(whoami)
-newgrp libvirt
-```
-
-5. Download the cloud image for Ubuntu 24.04.1 Server
-
-6. Create the disk image for the virtual machine
+3. Create the disk image for the virtual machine
 
 ```bash
 qemu-img create -f qcow2 ubuntu-24.04.1.qcow2 25G
 ```
 
-7. Run the script
+4. Run the script
 
 ```bash
 sudo sh kvm.sh
@@ -50,7 +31,7 @@ CLI after running the script and successful ubuntu installation:
 
 ![alt text](image-1.png)
 
-8. Find the IP address of the virtual machine
+5. Find the IP address of the virtual machine
 
 From the host:
 
@@ -64,7 +45,7 @@ From inside the virtual machine:
 ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | awk '{print "IP Address: "$1}'
 ```
 
-9. Logging to the virtual machine using SSH
+6. Logging to the virtual machine using SSH
 
 ```bash
 ssh -i ~/.ssh/id_ed25519 <username>@<ip-address>
@@ -74,7 +55,7 @@ ssh -i ~/.ssh/id_ed25519 <username>@<ip-address>
 
 ## Errors
 
-1. `vmlinuz` not found at Step 7 (Not always)
+1. `vmlinuz` not found at Step 4 (Not always)
 
 ```bash
 Enabling and Starting Libvirt Service...
@@ -109,7 +90,7 @@ Nov 06 17:24:23 LitterBox libvirtd[229709]: Unable to run security manager trans
 
 Didn't affect the installation, but needed intervention (Ctrl + C).
 
-2. Failed unmounting cdrom.mount - /cdrom at Step 7.
+2. Failed unmounting cdrom.mount - /cdrom at Step 4.
 
 ```bash
 start: subiquity/Shutdown/shutdown: mode=REBOOT

@@ -30,6 +30,7 @@ sudo apt install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils 
 
 # Enable and Start Libvirt Service
 echo "Enabling and Starting Libvirt Service..."
+sudo systemctl stop libvirtd
 sudo systemctl enable --now libvirtd
 sudo systemctl status libvirtd
 
