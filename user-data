@@ -1,0 +1,40 @@
+#cloud-config
+autoinstall:
+  version: 1
+  identity:
+    realname: ubuntu
+    hostname: ubuntu
+    username: ubuntu
+    password: password
+  ssh:
+    install-server: true
+    authorized-keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGGKEX+09+ySyju3eMvZmDe8fZqkJB76x+DSYqZMh5N8 ctrlcat@LitterBox
+    allow-pw: false
+  keyboard: { layout: us, toggle: null, variant: '' }
+  locale: en_US
+  network:
+    network:
+      version: 2
+      ethernets:
+        ens3:
+          dhcp4: true
+  storage:
+    layout:
+      name: lvm
+  updates: security
+  package_selection: standard
+  packages:
+    - vim
+    - curl
+    - wget
+    - git
+    - tmux
+    - htop
+    - net-tools
+    - openssh-server
+    - qemu-guest-agent
+  user-data:
+    disable_root: false
+  late-commands:
+    - echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/ubuntu
